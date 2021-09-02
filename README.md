@@ -3,7 +3,7 @@
 <img src="./inoa/static/images/logo-home.png">
 
 <h2>Requisitos mínimos</h2>
-Python 3.8.10
+Python 3.8.10<br>
 git version 2.25.1
 
 <h2>Dependêcias</h2>
@@ -23,7 +23,7 @@ soupsieve==2.2.1<br>
 sqlparse==0.4.1<br>
 urllib3==1.26.6<br>
 
-Para instalar as dependências rode o seguinte comando:
+Para instalar as dependências rode o seguinte comando:<br>
 No diretório onde está presente o requirements.txt.
 
 ```sh
