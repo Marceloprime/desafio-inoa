@@ -1,0 +1,72 @@
+
+.button-logout{
+    background-color: #a82626; 
+    color: white;
+    width: 7%;
+    height: 40%;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    padding-top: 0.2%;
+    margin: 1%;
+}
+
+.title{
+    font-weight: bold;
+}
+
+.button-logout:hover{
+    background-color: #b45353; 
+}
+
+.profile{
+    flex-direction: row;
+    background-color: rgb(116, 116, 206);
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title-name{
+    width: 60%;
+    padding-left: 3%;
+}
+
+.creation-forms{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#form-create-stock{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 2%;
+}
+
+#form-create-portifolio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 2%;
+}
+
+#form-time{
+    display: flex;
+    align-items: center;
+    padding-right: 2%;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-name-content{
+    color: white;
+}
+

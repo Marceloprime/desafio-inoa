@@ -1,0 +1,24 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="Stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="Stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="Stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="Stylesheet" href="{% static 'css/base.css' %}">
+
+    <script type="text/javascript" src="{% static 'js/table_trend.js' %}"></script>
+    <link href="{% static 'images/favicon.ico' %}"} rel="icon" type="image/x-icon">
+    <title>Inoa Sistemas</title>
+</head>
+<body>
+    {% block content %}
+    
+    {% endblock %}
+</body>
+</html>

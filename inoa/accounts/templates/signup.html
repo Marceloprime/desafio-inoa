@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <header>
+        <img src="{% static 'images/logo-home.png' %}" />
+    </header>
+    <main class="container">
+        <div class="container-form-signup">
+            <form method="post" id="login-form" >
+                <h1>Criar uma nova conta</h1>
+                {% csrf_token %}
+                <input class="input-field" type="text" name="username"  placeholder="Username" required>
+                <input class="input-field" type="text" name="first_name"  placeholder="Primeiro nome" required>
+                <input class="input-field" type="text" name="last_name"  placeholder="Sobre nome" required>
+                <input class="input-field" type="email" name="email"  placeholder="Email" required>
+                <input class="input-field" type="text" name="cpf_or_cnpj"  placeholder="CPF ou CNPJ" required>
+                <input class="input-field" type="tel" name="phone"  placeholder="Telefone" required>
+                <input class="input-field" type="password" name="password"  placeholder="Senha" required>
+                <input class='button-login' type="submit" value="Criar">
+                <a class='button-back' href="{% url 'login' %}">Voltar</a>
+            </form>
+        </div>
+    </main>
+{% endblock %}

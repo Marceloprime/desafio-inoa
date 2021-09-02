@@ -1,0 +1,102 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="Stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="Stylesheet" href="{% static 'css/base.css' %}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <script type="text/javascript" src="{% static 'js/table_trend.js' %}"></script>
+    <link href="{% static 'images/favicon.ico' %}"} rel="icon" type="image/x-icon">
+    <title>Inoa Sistemas</title>
+    {% bootstrap_css %}
+</head>
+<body onload="setTrend()">
+    <div class="profile">
+        <div class="title-name">
+            <h2 class="title-name-content">
+                {{user.first_name}} {{user.last_name}}
+            </h2>
+        </div>
+        <a class="button-logout" href="{% url 'logout' %}" >Sair</a>
+    </div>
+    {% bootstrap_javascript jquery=True %}
+    {% bootstrap_messages %}
+    <div class="creation-forms" >
+        <div id="form-create-stock">
+            <h3>Adicione um ativo</h3>
+            <form action="{% url 'index' %}" method="post" class="form" >
+                {% csrf_token %}
+                <select name="type_content" id="type_content" required>
+                    <option value="">Escolha uma Carteira</option>
+                    {% for portifolio in  portifolios %}
+                        <option value={{portifolio.id}}>{{portifolio.name}}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" name="codigo"  placeholder="Coloque o código da B3 aqui" required>
+                <input type="submit" value="Criar">
+            </form>
+        </div>
+        <div id="form-create-portifolio">
+            <form action="{% url 'index' %}" method="post" class="form" >
+                <h3>Crie uma cartéira</h3>
+                {% csrf_token %}
+                <input type="text" name="portifolio"  placeholder="Nome do portifólio" required>
+                <input type="submit" value="Criar">
+            </form>
+        </div>
+    </div>
+    <div class="content">
+        {% for portifolio in  portifolios%}
+            <h2><b>Carteira:</b> {{portifolio.name}}</h2>
+            <table class="table" style="text-align: center;">
+                <tr>
+                    <th>Código B3</th>
+                    <th>Tendência</th>
+                    <th>Preço</th>
+                    <th>Nome</th>
+                    <th>Moeda</th>
+                    <th>Limite inferior</th>
+                    <th>Limite Superior</th>
+                    <th>Histórico</th>
+                    <th></th>
+                </tr>
+                {% for stock in portifolio.stocks %}
+                    <tr>
+                        <td>{{stock.symbol}}</td>
+                        <td>{{stock.trend}}</td>
+                        <td>{{stock.current_quote}}</td>
+                        <td>{{stock.name}}</td>
+                        <td>{{stock.currency}}</td>
+                        <td>{{stock.limit_inferior}}</td>
+                        <td>{{stock.limit_superior}}</td>
+                        <td>
+                            <select name="type_content" id="type_content" required>
+                                <option value="">Histórico</option>
+                                {% for h_stock in  stock.historic %}
+                                    <option value={{h_stock.id}}>{{h_stock.date}} {{h_stock.current_value}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <form action="{% url 'delete' %}" method="post"> 
+                                {% csrf_token %}
+                                <button  name="submit" type="submit" value="{{stock.id}}"><i class="fa fa-trash-o"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        {% endfor %}
+    </div>
+</body>
+</html>
