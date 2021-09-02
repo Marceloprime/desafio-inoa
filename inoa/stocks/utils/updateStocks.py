@@ -11,9 +11,9 @@ from stocks.utils.setInterval import SetInterval
 
 
 #Email e senhas
-sender_address = '*@gmail.com'
-sender_pass = '*'
-receiver_address = '*@gmail.com'
+sender_address = 'marceloreis7777@gmail.com' # ocultado para a segurança do desenvolvedor
+sender_pass = '123456789zika'#ocultado para a segurança do desenvolvedor
+receiver_address = 'marceloreis7777@gmail.com'#ocultado para a segurança do desenvolvedor
 
 def send_emails_sales(stock):
     portfolios = Portfolio.objects.filter(portfolio=stock)
