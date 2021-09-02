@@ -1,6 +1,6 @@
 <h1>Desafio Inoa</h1>
 
-<img src=".inoa/static/images/logo-home.png">
+<img src="./inoa/static/images/logo-home.png">
 
 <h2>Requisitos mínimos</h2>
 Python 3.8.10
