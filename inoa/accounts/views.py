@@ -67,7 +67,7 @@ def Index(request):
     
     if request.POST:
         try:
-            if request.POST['portifolio']:
+            if request.POST['portifolio']:#Criacao de portifolio
                 user = User.objects.filter(username=request.user.username)[0]
 
                 if Portfolio.objects.filter(name=request.POST['portifolio']):
@@ -94,11 +94,12 @@ def Index(request):
         except:
             symbol = ''
 
+
         if symbol != '':
             symbol = symbol.upper()
 
             try:
-                if_there_is = Stock.objects.filter(symbol=symbol)[0]
+                if_there_is = Portfolio.objects.filter(id=portfolio.id,portfolio=Stock.objects.filter(symbol=symbol)[0].id)[0]
             except:
                 if_there_is = None
 

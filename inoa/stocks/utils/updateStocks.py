@@ -91,7 +91,7 @@ def updateStocks() :
 
 #Usar a classe SetInterval para rodar a funcao updateStocks a cada periodo determinado no time
 def update():
-    time = 10#segundos
+    time = 3600#segundos
     inter=SetInterval(time,updateStocks)
     t=Timer(time,inter)
     t.start()
