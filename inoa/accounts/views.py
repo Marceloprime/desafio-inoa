@@ -103,8 +103,6 @@ def Index(request):
             except:
                 if_there_is = None
 
-            print( Portfolio.objects.filter(id=request.POST['type_content']))
-            print( Portfolio.objects.filter(portfolio=Stock.objects.filter(symbol=symbol)[0].id))
             if if_there_is != None:
                 messages.error(request,'Esse código '+ symbol + ' Já foi cadastrado')
             else:
