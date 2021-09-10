@@ -206,9 +206,9 @@ def Graph_view(request):
         except:
             stock = ''
         
-        dataHistoric = get_data(symbol+'.SA', start_date="12/04/2018", end_date="09/09/2021", index_as_date = True, interval="1d")
+        dataHistoric = get_data(symbol+'.SA', start_date="12/04/2010", end_date="09/09/2021", index_as_date = True, interval="1d")
         weekly_data = get_data("msft", interval = "1wk")
-        print(weekly_data)
+
         data = []
         
         try:
