@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    
     <script type="text/javascript" src="{% static 'js/table_trend.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/graph.js' %}"></script>
 
     <link href="{% static 'images/favicon.ico' %}"} rel="icon" type="image/x-icon">
 
@@ -110,38 +109,10 @@
 
         {% endfor %}
     </div>
-    <!-- Modals -->
-    {% for portfolio in  portfolios %}
-        {% for stock in portfolio.stocks %}
-            <div id="{{stock.id}}" class="w3-modal">
-                <div class="w3-modal-content">
-                    <div class="w3-container">
-                        <span onclick="document.getElementById('{{stock.id}}').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                        <div class="modal-body">
-                            <h5 class="modal-title" id="TituloModalLongoExemplo">{{stock.name}} - Histórico</h5>
-                            <select id="A{{stock.id}}" form="carform">
-                                <option>Histórico</option>
-                                {% for h_stock in  stock.historic %}
-                                    <option>
-                                        {{h_stock.date}} - {{h_stock.current_value}}
-                                    </option>
-                                {% endfor %}   
-                              </select>
-                            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                            <div style="display: flex;" id="chart_div"></div>  
-                            <div id="container"></div>                     
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-        {% endfor %}
-    {% endfor %}
 
     <script>
-        google.charts.load('current', {packages: ['corechart', 'line']});
-        google.charts.setOnLoadCallback(drawLogScales);
-        var time = 1000000
+
+        var time = 1000
 
         setInterval(function(){ 
             var content = document.getElementById('stock-content')
@@ -149,23 +120,10 @@
                 .then(resp => resp.text())
                     .then(html => {
                         content.innerHTML = html
+                        console.log(html)
                         setTrend()
                     }) 
         }, time);
-
-        function modal(elem){
-
-            var modal = document.getElementById(elem.getAttribute('data').toString())
-
-            
-            drawLogScales(elem.getAttribute('data').toString())
-            modal.style.display = 'block'
-        }
-
-        function close(elem){
-            var modal = document.getElementById(elem.getAttribute('data').toString())
-            modal.style.display = 'none'
-        }
 
     </script>
 </body>

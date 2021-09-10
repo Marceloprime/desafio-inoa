@@ -40,6 +40,7 @@ def Login(request):
 
     return render(request,'login.html')    
 
+@login_required
 def Logout(request):
     logout(request)
     return render(request, 'logout.html')#nesse html eh redirecionado para a urllogin
@@ -205,13 +206,20 @@ def Graph_view(request):
         except:
             stock = ''
         
-        dataHistoric = get_data(symbol+'.SA', start_date="12/04/2015", end_date="09/09/2021", index_as_date = True, interval="1d")
-        
+        dataHistoric = get_data(symbol+'.SA', start_date="12/04/2018", end_date="09/09/2021", index_as_date = True, interval="1d")
+        weekly_data = get_data("msft", interval = "1wk")
+        print(weekly_data)
         data = []
         
         try:
             for index, row in dataHistoric.iterrows():
-                data.append([str(index),int(row['close'])])
+                date = str(index)
+                date = date.split(" ")
+
+                print(int(row['close']))
+                print(row['close'])
+
+                data.append([date[0],int(row['close'])])
         except:
             print('error')
         #for historic in stock.historic.all():  
@@ -222,6 +230,7 @@ def Graph_view(request):
             "stock" : stock,
             "historic" : data,
         }
+        #print(data)
         return render(request, 'graph.html',context=context)
 
     return render(request, 'graph.html',context=context)
