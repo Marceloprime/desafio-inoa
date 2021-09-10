@@ -1,0 +1,31 @@
+{% extends "baseHome.html" %}
+{% load static %}
+
+{% block content %}
+    <table class="table" style="text-align: center;">
+        <tr style="background-color: rgb(184, 184, 184);">
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Zona</th>
+            <th>Moeda</th>
+            <th>Importância</th>
+            <th>Nome do evento</th>
+            <th>actual</th>
+            <th>forecast</th>
+            <th>previous</th>
+        </tr>
+        {% for event in calendar %}
+            <tr>
+                <th>{{event.date}}</th>
+                <th>{{event.time}}</th>
+                <th>{{event.zone}}</th>
+                <th>{{event.currency}}</th>
+                <th>{{event.importance}}</th>
+                <th>{{event.event}}</th>
+                <th>{{event.actual}}</th>
+                <th>{{event.forecast}}</th>
+                <th>{{event.previous}}</th>
+            </tr>        
+        {% endfor %}
+    </table>
+{% endblock %}

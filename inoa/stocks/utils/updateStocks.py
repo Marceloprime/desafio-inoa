@@ -11,9 +11,9 @@ from stocks.utils.setInterval import SetInterval
 
 
 #Email e senhas
-sender_address = 'marceloreis7777@gmail.com' # ocultado para a segurança do desenvolvedor
-sender_pass = '123456789zika'#ocultado para a segurança do desenvolvedor
-receiver_address = 'marceloreis7777@gmail.com'#ocultado para a segurança do desenvolvedor
+sender_address = 'reisfinanceiro01@gmail.com' # ocultado para a segurança do desenvolvedor
+sender_pass = '!@#qazwsxedc123'#ocultado para a segurança do desenvolvedor
+receiver_address = 'reisfinanceiro01@gmail.com'#ocultado para a segurança do desenvolvedor
 
 def send_emails_sales(stock):
     portfolios = Portfolio.objects.filter(portfolio=stock)
@@ -76,11 +76,17 @@ def updateStocks() :
         #verificar os limites
         if stock.limit_inferior > float(data['results'][stock.symbol]['price']):
             stock.limit_inferior = float(data['results'][stock.symbol]['price'])
-            send_emails_sales(stock)
+            try:
+                send_emails_sales(stock)
+            except:
+                print('Falha no envio')
 
         if stock.limit_superior < float(data['results'][stock.symbol]['price']):
             stock.limit_superior = float(data['results'][stock.symbol]['price'])
-            send_emails_purchase(stock)
+            try:
+                send_emails_purchase(stock)
+            except:
+                print('Falha no envio')
 
         before_price = stock.current_quote
         stock.current_quote = price
@@ -91,7 +97,7 @@ def updateStocks() :
 
 #Usar a classe SetInterval para rodar a funcao updateStocks a cada periodo determinado no time
 def update():
-    time = 3600#segundos
+    time = 6000#segundos
     inter=SetInterval(time,updateStocks)
     t=Timer(time,inter)
     t.start()

@@ -1,0 +1,51 @@
+{% load static %}
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="Stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="Stylesheet" href="{% static 'css/base.css' %}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <script type="text/javascript" src="{% static 'js/table_trend.js' %}"></script>
+
+    <link href="{% static 'images/favicon.ico' %}"} rel="icon" type="image/x-icon">
+
+    <title>Inoa Sistemas</title>
+    {% bootstrap_css %}
+</head>
+<body onload="setTrend()">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="#">{{user.first_name}}</a>
+        <a class="button-logout" href="{% url 'logout' %}" ><i class="fa fa-sign-out"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Calendário Econômico</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+    {% bootstrap_javascript jquery=True %}
+    {% bootstrap_messages %}
+    <div id="stock-content" class="content">
+        {% block content %}
+    
+        {% endblock %}
+    </div>
+</body>
+</html>

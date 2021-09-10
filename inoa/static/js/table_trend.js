@@ -1,6 +1,6 @@
 function setTrend(){
     rows = document.getElementsByTagName('td')
-
+    
     for (variavel in rows) {
 
         if(rows[variavel].textContent === 'neutral'){

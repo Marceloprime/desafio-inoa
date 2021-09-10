@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'stocks',
     'bootstrap4',
+    'googlecharts'
 ]
 
 MIDDLEWARE = [

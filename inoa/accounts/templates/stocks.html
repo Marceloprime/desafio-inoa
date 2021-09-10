@@ -1,0 +1,47 @@
+{% load static %}
+
+{% for portfolio in  portfolio%}
+<h2><b>Carteira:</b> {{portfolio.name}}</h2>
+<table class="table" style="text-align: center;">
+    <tr>
+        <th>Código B3</th>
+        <th>Tendência</th>
+        <th>Preço</th>
+        <th>Nome</th>
+        <th>Moeda</th>
+        <th>Limite inferior</th>
+        <th>Limite Superior</th>
+        <th>Histórico</th>
+        <th></th>
+    </tr>
+    {% for stock in portfolio.stocks %}
+        <tr>
+            <td>{{stock.symbol}}</td>
+            <td>{{stock.trend}}</td>
+            <td>R$ {{stock.current_quote}}</td>
+            <td>{{stock.name}}</td>
+            <td>{{stock.currency}}</td>
+            <td style="color: red;">R$ {{stock.limit_inferior}}</td>
+            <td style="color: green;">R$ {{stock.limit_superior}}</td>
+            <td>
+                <select name="type_content" id="type_content" required>
+                    <option value="">Histórico</option>
+                    {% for h_stock in  stock.historic %}
+                        <option value={{h_stock.id}}>{{h_stock.date}} {{h_stock.current_value}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <form action="{% url 'delete' %}" method="post"> 
+                    {% csrf_token %}
+                    <button  name="submit" type="submit" value="{{stock.id}}"><i class="fa fa-trash-o"></i></button>
+                </form>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLongoExemplo">
+                    Histórico
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endfor %}

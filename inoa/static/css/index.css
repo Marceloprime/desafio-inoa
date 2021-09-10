@@ -2,14 +2,15 @@
 .button-logout{
     background-color: #a82626; 
     color: white;
-    width: 7%;
-    height: 40%;
+    width: 3.5%;
+    height: 20%;
     text-align: center;
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
     padding-top: 0.2%;
     margin: 1%;
+    border-radius: 15px;
 }
 
 .title{

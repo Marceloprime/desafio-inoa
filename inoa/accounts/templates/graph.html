@@ -1,0 +1,33 @@
+{% extends "baseHome.html" %}
+{% load static %}
+{% load googlecharts %}
+
+{% block content %}
+    <script type="text/javascript" src="{% static 'js/graph.js' %}"></script>
+
+    <h2>{{stock.symbol}}</h2>
+    <p style="color: black;"> Preço R$ {{stock.current_quote.current_value}}</p>
+    <div id="chart_div"></div>
+    {# container #}
+    <div id="out"></div>
+    {% googlecharts %}
+        {# named data and options can be reused #}
+        {% data historic "out_data" %}
+            {% col "string" "Name" %}"{{ val }}"{% endcol %}
+            {% col "number" "Value" %}{{ val }}{% endcol %}
+        {% enddata %}
+        {# you can also use global javascript variables here, #}
+        {# and call functions #}
+        {% options "out_options" %}
+            kind: "LineChart",
+            options: {
+                height: 600,
+                width: 1200,
+                curveType: 'function',
+            }
+        {% endoptions %}
+        {# chart is assembled from container, data and options #}
+        {% graph "out" "out_data" "out_options" %}
+    {% endgooglecharts %}
+
+{% endblock %}

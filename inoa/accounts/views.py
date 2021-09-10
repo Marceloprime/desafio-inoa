@@ -7,15 +7,21 @@ from django.contrib.auth.decorators import login_required
 #python library
 import requests
 import json
+from django.http import HttpResponse
+import yfinance as yf
+from yahoo_fin.stock_info import get_data
+import pandas as pd
 
 #Meus modules
 from stocks.models import Stock, Price
 from .models import User, Portfolio
 from .utils.portfolioContent import portfolioContent
+from stocks.utils.economic_calendar import economic_calendar
+
 
 def Login(request):
     if(str(request.user) != "AnonymousUser"):
-        return redirect('index')
+        return redirect('home')
     
     try:
         username = request.POST['username']
@@ -24,7 +30,7 @@ def Login(request):
         if user is not None:
             login(request, user)
             # Caso tenha sucesso
-            return redirect('index')
+            return redirect('home')
         else:
             # Erro no login
             return render(request, 'login.html')
@@ -56,13 +62,13 @@ def Signup(request):
     return render(request,'signup.html')
 
 @login_required
-def Index(request):
+def Home(request):
     user =  request.user
-    portifolios = portfolioContent(user)
+    portfolios = portfolioContent(user)
    
     context = {
         "user" : user,
-        "portifolios" : portifolios
+        "portfolios" : portfolios
     }
     
     if request.POST:
@@ -72,17 +78,17 @@ def Index(request):
 
                 if Portfolio.objects.filter(name=request.POST['portifolio']):
                     messages.error(request,"Erro! esse nome já é usado")
-                    return render(request, 'index.html',context=context)
+                    return render(request, 'home.html',context=context)
 
                 portfolio = Portfolio(user=user,name=request.POST['portifolio'])
                 portfolio.save()
 
                 messages.success(request,"Carteira criada com sucesso")
 
-                portifolios = portfolioContent(user)
-                context.portifolios = portifolios
+                portfolios = portfolioContent(user)
+                context.portfolios = portfolios
 
-                return render(request, 'index.html',context=context)
+                return render(request, 'home.html',context=context)
         except:
             print('Portifolio invalido')
 
@@ -114,13 +120,37 @@ def Index(request):
                     stock = Stock(name=data['results'][symbol]['name'],symbol=symbol,description=data['results'][symbol]['description'],website=data['results'][symbol]['website'],currency=data['results'][symbol]['currency'],current_quote=price,limit_inferior=data['results'][symbol]['price'],limit_superior=data['results'][symbol]['price'])
                     stock.save()
                     portfolio.portfolio.add(stock)
+
                 except:
                     messages.error(request,'Esse código '+ symbol + ' esta incorreto')
                     print(data)
 
-    return render(request, 'index.html',context=context)
+    return render(request, 'home.html',context=context)
 
-#usado pelo form em index.html para deletar um ativo
+#usado pelo form em home.html para deletar um ativo
+
+@login_required
+def StockContent(request):
+    user =  request.user
+    portfolios = portfolioContent(user)
+   
+    context = {
+        "user" : user,
+        "portfolios" : portfolios
+    }
+    
+    return render(request, 'stocks.html',context=context)
+
+@login_required
+def Calendar(request):
+    user =  request.user
+    calendar = economic_calendar()
+    context = {
+        "user" : user,
+        "calendar": calendar
+    }
+    return render(request, 'calendar.html',context=context)
+
 @login_required
 def DeleteStock(request):
     if request.POST:
@@ -137,4 +167,61 @@ def DeleteStock(request):
         "portifolios" : portifolios
     }
 
-    return render(request, 'index.html',context=context)
+    return render(request, 'home.html',context=context)
+
+@login_required
+def graphic_data(request):
+
+    user =  request.user
+    portfolios = Portfolio.objects.filter(user=user)
+    data = []
+    for portfolio in portfolios:
+        for stock in portfolio.portfolio.all():
+            priceData = []
+            for price in stock.historic.all():
+                aux = {
+                    "value" : price.current_value,
+                    "date": str(price.date)
+                }
+
+                priceData.append(aux)
+            
+            aux = {
+                "stock" : stock.id,
+                "prices" : priceData
+            }
+        data.append(aux)
+
+    #data = json.dumps(data)
+    return HttpResponse(data)
+
+@login_required
+def Graph_view(request):
+    if request.POST:
+        symbol = request.POST['symbol']
+
+        try:
+            stock = Stock.objects.filter(symbol=symbol)[0]
+        except:
+            stock = ''
+        
+        dataHistoric = get_data(symbol+'.SA', start_date="12/04/2015", end_date="09/09/2021", index_as_date = True, interval="1d")
+        
+        data = []
+        
+        try:
+            for index, row in dataHistoric.iterrows():
+                data.append([str(index),int(row['close'])])
+        except:
+            print('error')
+        #for historic in stock.historic.all():  
+            #data.append([str(historic.date),int(historic.current_value)])
+
+
+        context = {
+            "stock" : stock,
+            "historic" : data,
+        }
+        return render(request, 'graph.html',context=context)
+
+    return render(request, 'graph.html',context=context)
