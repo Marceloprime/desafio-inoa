@@ -60,7 +60,7 @@
         </div>
         <div id="form-create-portifolio">
             <form action="{% url 'home' %}" method="post" class="form" >
-                <h3>Crie uma cartéira</h3>
+                <h3>Crie uma Carteira</h3>
                 {% csrf_token %}
                 <input type="text" name="portifolio"  placeholder="Nome do portifólio" required>
                 <input type="submit" value="Criar">
@@ -69,7 +69,7 @@
     </div>
     <div id="stock-content" class="content">
         {% for portfolio in  portfolios%}
-            <h2><b>Carteira:</b> {{portifolio.name}}</h2>
+            <h2><b>Carteira:</b> {{portfolio.name}}</h2>
             <table class="table" style="text-align: center;">
                 <tr>
                     <th>Código B3</th>

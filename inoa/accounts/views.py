@@ -11,6 +11,7 @@ from django.http import HttpResponse
 import yfinance as yf
 from yahoo_fin.stock_info import get_data
 import pandas as pd
+import math
 
 #Meus modules
 from stocks.models import Stock, Price
@@ -216,10 +217,10 @@ def Graph_view(request):
                 date = str(index)
                 date = date.split(" ")
 
-                print(int(row['close']))
-                print(row['close'])
-
-                data.append([date[0],int(row['close'])])
+                if(math.isnan(row['close'])):
+                    continue
+                
+                data.append([date[0],int(round(row['close'],2)*100)])
         except:
             print('error')
         #for historic in stock.historic.all():  
