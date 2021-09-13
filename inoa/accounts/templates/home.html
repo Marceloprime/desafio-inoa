@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    
     <script type="text/javascript" src="{% static 'js/table_trend.js' %}"></script>
-
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
     <link href="{% static 'images/favicon.ico' %}"} rel="icon" type="image/x-icon">
 
     <title>Inoa Sistemas</title>
@@ -147,7 +147,6 @@
                 .then(resp => resp.text())
                     .then(html => {
                         content.innerHTML = html
-                        console.log(html)
                         setTrend()
                     }) 
         }, time);
