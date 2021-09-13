@@ -68,7 +68,7 @@ def Signup(request):
 def Home(request):
     user =  request.user
     portfolios = portfolioContent(user)
-   
+    
     context = {
         "user" : user,
         "portfolios" : portfolios

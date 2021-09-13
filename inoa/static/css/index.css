@@ -71,3 +71,34 @@
     color: white;
 }
 
+.carrossel-stocks{
+    background-color: white;
+}
+
+.stocks-ul{
+    display: inline-flex;
+    list-style: none;
+    border-style: solid;
+}
+
+.stocks-li{
+    position: relative;
+    text-align: center;
+    animation: stocks-frame 15s linear 5s infinite;
+    margin-left: 1%;
+    margin-right: 2%;
+}
+
+@keyframes stocks-frame {
+    0%   {left:0%; top:0px;}
+    10%  {left:10%; top:0px;}
+    20%  {left:20%; top:0px;}
+    30%  {left:30%; top:0px;}
+    40%  {left:40%; top:0px;}
+    50%  {left:50%; top:0px;}
+    60%  {left:60%; top:0px;}
+    70%  {left:70%; top:0px;}
+    80%  {left:80%; top:0px;}
+    90%  {left:90%; top:0px;}
+    100% {left:100%; top:0px;display:none}
+}

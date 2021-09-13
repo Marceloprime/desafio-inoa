@@ -1,7 +1,7 @@
 {% load static %}
 
 {% for portfolio in  portfolios%}
-<h2><b>Carteira:</b> {{portfolio.name}}</h2>
+<h2 id="{{portfolio.name}}"><b>Carteira:</b> {{portfolio.name}} <a href="#home"><i class="fa fa-home"></i></a></h2>
 <table class="table" style="text-align: center;">
     <tr>
         <th>Código B3</th>

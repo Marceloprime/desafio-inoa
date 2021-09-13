@@ -23,7 +23,7 @@
     {% bootstrap_css %}
 </head>
 <body onload="setTrend()">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #e3f2fd;" id="home">
         <a class="navbar-brand" href="#">{{user.first_name}}</a>
         <a class="button-logout" href="{% url 'logout' %}" ><i class="fa fa-sign-out"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,9 +38,36 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'calendar' %}">Calendário Econômico</a>
             </li>
+            <li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Carteiras
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for portfolio in  portfolios %}
+                            <a class="dropdown-item" href="#{{portfolio.name}}">{{portfolio.name}}</a>
+                        {% endfor %}
+                    </div>
+                  </li>
+            </li>
           </ul>
         </div>
     </nav>
+    
+
+    <div class="carrossel-stocks">
+        <ul class="stocks-ul">
+            {% for portfolio in  portfolios%}
+                {% for stock in portfolio.stocks %}
+                    <li id="{{stock.id}}" class="stocks-li">
+                        <b>{{stock.symbol}}</b> {{stock.current_quote}}
+                    </li>
+                {% endfor %}
+            {% endfor %}
+            
+        </ul>
+    </div>
+
     {% bootstrap_javascript jquery=True %}
     {% bootstrap_messages %}
     <div class="creation-forms" >
@@ -69,8 +96,8 @@
     </div>
     <div id="stock-content" class="content">
         {% for portfolio in  portfolios%}
-            <h2><b>Carteira:</b> {{portfolio.name}}</h2>
-            <table class="table" style="text-align: center;">
+        <h2 id="{{portfolio.name}}" ><b>Carteira:</b> {{portfolio.name}} <a href="#home"><i class="fa fa-home"></i></a></h2>
+        <table class="table" style="text-align: center;">
                 <tr>
                     <th>Código B3</th>
                     <th>Tendência</th>
