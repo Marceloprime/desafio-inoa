@@ -1,4 +1,4 @@
-<h1>Desafio Inoa</h1>
+<h1>PSEL - Desafio Inoa</h1>
 
 <img src="./inoa/static/images/logo-home.png">
 

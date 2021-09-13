@@ -3,6 +3,7 @@ from threading import Timer
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from decouple import config 
 
 #My modules
 from ..models import Stock, Price
@@ -11,9 +12,9 @@ from stocks.utils.setInterval import SetInterval
 
 
 #Email e senhas
-sender_address = '@gmail.com' # ocultado para a segurança do desenvolvedor
-sender_pass = ''#ocultado para a segurança do desenvolvedor
-receiver_address = '@gmail.com'#ocultado para a segurança do desenvolvedor
+sender_address = config('email')
+sender_pass = config('password')
+receiver_address =  config('email')
 
 def send_emails_sales(stock):
     portfolios = Portfolio.objects.filter(portfolio=stock)
@@ -62,7 +63,7 @@ def updateStocks() :
     stocks = Stock.objects.all()
 
     for stock in stocks:
-        r = requests.get('https://api.hgbrasil.com/finance/stock_price?key=9495f087&symbol='+ stock.symbol)
+        r = requests.get('https://api.hgbrasil.com/finance/stock_price?key='+config('API_KEY')+'&symbol='+ stock.symbol)
         data = r.json()
         price = Price(symbol=stock.symbol,current_value=data['results'][stock.symbol]['price'])
         price.save()
@@ -97,7 +98,8 @@ def updateStocks() :
 
 #Usar a classe SetInterval para rodar a funcao updateStocks a cada periodo determinado no time
 def update():
-    time = 600#segundos
+
+    time = 216 #considerando que é permitido 400 request por dia, 86400 segundos / 400 requests = 1 request a cada 216
     inter=SetInterval(time,updateStocks)
     t=Timer(time,inter)
     t.start()

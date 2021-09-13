@@ -12,8 +12,9 @@ import yfinance as yf
 from yahoo_fin.stock_info import get_data
 import pandas as pd
 import math
+from decouple import config 
 
-#Meus modules
+#My library
 from stocks.models import Stock, Price
 from .models import User, Portfolio
 from .utils.portfolioContent import portfolioContent
@@ -115,7 +116,7 @@ def Home(request):
                 messages.error(request,'Esse código '+ symbol + ' Já foi cadastrado')
             else:
                 try:
-                    r = requests.get('https://api.hgbrasil.com/finance/stock_price?key=9495f087&symbol='+symbol)
+                    r = requests.get('https://api.hgbrasil.com/finance/stock_price?key='+config('API_KEY')+'&symbol='+symbol)
                     data = r.json()
                     price = Price(symbol=symbol,current_value=data['results'][symbol]['price'])
                     price.save()
