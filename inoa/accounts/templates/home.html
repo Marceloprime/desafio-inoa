@@ -78,7 +78,7 @@
                 <select name="type_content" id="type_content" required>
                     <option value="">Escolha uma Carteira</option>
                     {% for portfolio in  portfolios %}
-                        <option value={{portifolio.id}}>{{portfolio.name}}</option>
+                        <option value={{portfolio.id}}>{{portfolio.name}}</option>
                     {% endfor %}
                 </select>
                 <input type="text" name="codigo"  placeholder="Coloque o código da B3 aqui" required>

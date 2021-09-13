@@ -78,7 +78,7 @@ def Home(request):
         try:
             if request.POST['portifolio']:#Criacao de portifolio
                 user = User.objects.filter(username=request.user.username)[0]
-
+                    
                 if Portfolio.objects.filter(name=request.POST['portifolio']):
                     messages.error(request,"Erro! esse nome já é usado")
                     return render(request, 'home.html',context=context)
@@ -93,7 +93,7 @@ def Home(request):
 
                 return render(request, 'home.html',context=context)
         except:
-            print('Portifolio invalido')
+            print('Portifolio invalido 5')
 
 
         try:

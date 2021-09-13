@@ -99,7 +99,7 @@ def updateStocks() :
 #Usar a classe SetInterval para rodar a funcao updateStocks a cada periodo determinado no time
 def update():
 
-    time = 216 #considerando que é permitido 400 request por dia, 86400 segundos / 400 requests = 1 request a cada 216
+    time = 2160 #considerando que é permitido 400 request por dia, 86400 segundos / 400 requests = 1 request a cada 216
     inter=SetInterval(time,updateStocks)
     t=Timer(time,inter)
     t.start()
