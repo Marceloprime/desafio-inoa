@@ -73,32 +73,55 @@
 
 .carrossel-stocks{
     background-color: white;
+    position: relative;
+    overflow: hidden;
 }
 
 .stocks-ul{
     display: inline-flex;
     list-style: none;
-    border-style: solid;
+    transform: translate3d(0, 0, 0);
+    animation: stocks-frame 25s linear 1s infinite;
 }
+
+.stocks-ul > li {
+    transform: translate3d(0, 0, 0);
+ }
 
 .stocks-li{
     position: relative;
     text-align: center;
-    animation: stocks-frame 20s linear 1s infinite;
     margin-left: 1%;
     margin-right: 2%;
+
 }
 
-
 @keyframes stocks-frame {
-    0%   {left: -100%; top:0px;}
-    10%  {left:-77.77%; top:0px;}
-    20%  {left:-55.55%; top:0px;}
-    30%  {left:-33.33%; top:0px;}
-    40%  {left:-11.11%; top:0px;}
-    60%  {left:11.11%; top:0px;}
-    70%  {left:33.33%; top:0px;}
-    80%  {left:55.55; top:0px;}
-    90%  {left:77.77%; top:0px;}
-    100% {left:-100%; top:0px;display:none}
+    0%    { left: 0; }
+    100%  { -webkit-transform: translateX(-200%);}
+}
+
+.container-time{
+    background-color: rgb(207, 238, 238);
+}
+
+.button-list{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+.button-list > li{
+    margin-left: 1%;
+
+}
+
+.button-list > li > button{
+    color: white;
+    background-color: rgb(32, 156, 156);
+}
+
+.button-list > li > button:hover{
+    background-color:rgb(39, 201, 201);
 }

@@ -52,9 +52,9 @@
             </li>
           </ul>
         </div>
-    </nav>
-    
-
+    </nav>   
+    {% bootstrap_javascript jquery=True %}
+    {% bootstrap_messages %}
     <div class="carrossel-stocks">
         <ul class="stocks-ul">
             {% for portfolio in  portfolios%}
@@ -63,13 +63,42 @@
                         <b>{{stock.symbol}}</b> {{stock.current_quote}}
                     </li>
                 {% endfor %}
+            {% endfor %}   
+            {% for portfolio in  portfolios%}
+            {% for stock in portfolio.stocks %}
+                <li id="{{stock.id}}" class="stocks-li">
+                    <b>{{stock.symbol}}</b> {{stock.current_quote}}
+                </li>
             {% endfor %}
-            
+        {% endfor %}   
+        {% for portfolio in  portfolios%}
+        {% for stock in portfolio.stocks %}
+            <li id="{{stock.id}}" class="stocks-li">
+                <b>{{stock.symbol}}</b> {{stock.current_quote}}
+            </li>
+        {% endfor %}
+    {% endfor %}   
         </ul>
     </div>
-
-    {% bootstrap_javascript jquery=True %}
-    {% bootstrap_messages %}
+    <div class="container-time">
+        <ul class="button-list">
+            <li>
+                Tempo de Atualização
+            </li>
+            <li>
+                <button onclick="chooseTime('second')">1 s</button>
+            </li>
+            <li>
+                <button onclick="chooseTime('minute')">1 m</button>
+            </li>
+            <li>
+                <button onclick="chooseTime('30 minute')">30 m</button>
+            </li>
+            <li>
+                <button onclick="chooseTime('hour')">1 h</button>
+            </li>
+        </ul>
+    </div>
     <div class="creation-forms" >
         <div id="form-create-stock">
             <h3>Adicione um ativo</h3>
@@ -138,19 +167,42 @@
     </div>
 
     <script>
-
         var time = 1000
 
-        setInterval(function(){ 
+        function chooseTime(time_course){
+            clearInterval(interval);
+            if(time_course === 'second'){            
+                time = 1000
+                moni_time(time)
+            }
+            else if( time_course === 'minute'){
+                time = 60000
+                moni_time(time)
+            }
+            else if( time_course === '30 minute'){
+                time = 18000000
+                moni_time(time)
+            }
+            else if( time_course === 'hour'){
+                time = 36000000
+                moni_time(time)
+            }
+        }
+
+        var interval = moni_time(time)
+
+        function moni_time(time){
+            return setInterval(function(){ 
             var content = document.getElementById('stock-content')
             fetch('http://127.0.0.1:8000/stocks/')
                 .then(resp => resp.text())
                     .then(html => {
                         content.innerHTML = html
                         setTrend()
+                        console.log(time)
                     }) 
-        }, time);
-
+            }, time);
+        }
     </script>
 </body>
 </html>
